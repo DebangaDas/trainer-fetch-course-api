@@ -1,0 +1,55 @@
+openapi: 3.0.1
+info:
+  title: LMS API Sample
+  description: Sample OpenAPI spec for LMS project
+  version: 1.0.0
+  contact: 
+    email: debangabm@gmail.com
+    name: Debanga Das
+
+paths:
+  /fetch/{id}:
+    get:
+      tags:
+        - fetch-courses
+      description: Fetches courses by trainer ID
+      operationId: fetchTrainerCourses
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Course'
+        '500':
+          description: There is no such trainer.
+
+components:
+  schemas:
+    Trainer:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+
+    Course:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        trainer:
+          $ref: '#/components/schemas/Trainer'
